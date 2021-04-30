@@ -1,4 +1,4 @@
-import styles from './City.module.css'
+//import styles from './City.module.css'
 
 const City = ({ city }) => {
     return (

@@ -1,7 +1,7 @@
 import { getData } from '../../services/CityService'
 import React, { useState, useEffect } from 'react'
 import City from '../City/City'
-import styles from './Home.module.css'
+//import styles from './Home.module.css'
 
 const Home = () => {
     const [data, setData] = useState([]);
