@@ -1,0 +1,9 @@
+$theme-colors: (
+   "info": pink,
+   "danger": teal,
+   "primary": purple
+);
+ 
+// import bootstrap stylesheet
+ 
+@import "~bootstrap/scss/bootstrap";
