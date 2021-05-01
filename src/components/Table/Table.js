@@ -57,7 +57,7 @@ const Table = ({ columns, data }) => {
     } = useTable({
         columns,
         data,
-        initialState: { pageIndex: 2 }
+        initialState: { pageIndex: 0 }
     },
         useFilters,
         useGlobalFilter,
@@ -79,6 +79,7 @@ const Table = ({ columns, data }) => {
         setGlobalFilterInput('');
         setTotalCout(data.length);
         setPageSize(10);
+        gotoPage(0);
         gotoPage(0);
         console.log(`data changed with ${data.length} rows`);
     }, [data, gotoPage, setPageSize]);
@@ -167,7 +168,7 @@ const Table = ({ columns, data }) => {
                     <input
                         type="number"
                         value={pageIndex + 1}
-                        //defaultValue={pageIndex + 1}
+                        defaultValue={pageIndex + 1}
                         onChange={e => {
                             const page = e.target.value ? Number(e.target.value) - 1 : 0
                             gotoPage(page)
