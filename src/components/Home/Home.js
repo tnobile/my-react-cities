@@ -1,7 +1,24 @@
 import { getData } from '../../services/CityService'
-import React, { useState, useEffect } from 'react'
-import City from '../City/City'
+import React, { useState, useEffect, useMemo } from 'react'
+import Table from '../Table/Table'
+import { useTable } from 'react-table';
 //import styles from './Home.module.css'
+
+const toFlag = (code) => {
+    switch (code) {
+        case "ES": return "🇪🇸";
+        case "JP": return "🇯🇵";
+        case "GB": return "🇬🇧";
+        case "AR": return "🇦🇷";
+        case "CN": return "🇨🇳";
+        case "CH": return "🇨🇭";
+        case "IT": return "🇮🇹";
+        case "FR": return "🇫🇷";
+        case "US": return "🇺🇸";
+        case "DE": return "🇩🇪";
+        default: return code;
+    }
+}
 
 const Home = () => {
     const [data, setData] = useState([]);
@@ -29,7 +46,7 @@ const Home = () => {
         // 3. immediately executed function for async purpose
         (async () => {
             //try {
-            const result = await getData(country);
+            const result = await getData(country, 100);
             console.log(`got ${result.length}  for ${country}`)
             setData(result);
             //} catch (e) {
@@ -44,14 +61,67 @@ const Home = () => {
     const handleCountryChange = (evt) => {
         setCountry(evt.target.value);
     }
-
+    const columns = useMemo(() => [
+        {
+            Header: "Cities",
+            // first group of columns
+            columns: [
+                {
+                    Header: "Name",
+                    accessor: "city"
+                },
+                {
+                    Header: "Name(admin)",
+                    accessor: "admin_name"
+                },
+                {
+                    Header: "Country",
+                    accessor: "country"
+                },
+                {
+                    Header: "Code",
+                    accessor: "iso2",
+                    id: "flag",
+                    Cell: ({ cell: { value } }) => <span className="badge">{value}</span>
+                },
+                {
+                    Header: "Flag",
+                    accessor: "iso2",
+                    Cell: ({ cell: { value } }) =>toFlag(value)
+                },
+                {
+                    Header: "Capital",
+                    accessor: "capital"
+                }
+            ]
+        },
+        {
+            Header: "Details",
+            columns: [{
+                Header: "Population",
+                accessor: "population"
+            },
+            {
+                Header: "Population(Proper)",
+                accessor: "population_proper"
+            },
+            {
+                Header: "Latitude",
+                accessor: "lat"
+            },
+            {
+                Header: "Longitudo",
+                accessor: "lng"
+            }]
+        }
+    ])
     return (
         <>
             <div>
                 <h1>Country/City Data</h1>
                 <a href='https://tnobile.github.io/data-world-cities/'>source</a>
                 {' '}
-                <select name='country' onChange={handleCountryChange}>
+                <select name='country' defaultValue={country} onChange={handleCountryChange}>
                     <option value="jp" name="jp">Japan</option>
                     <option value="gb" name="gb">UK</option>
                     <option value="ch" name="ch">Switzerland</option>
@@ -63,14 +133,11 @@ const Home = () => {
                 </select>
             </div>
             {data && data.length > 0 &&
-                <table>
-                    <tbody>
-                        {data.map((d, i) => <City key={i} row={i} city={d}></City>)}
-                    </tbody>
-                </table>
+                <Table columns={columns} data={data}></Table>
             }
             {data && data.length === 0 && <h2>No data for {country}</h2>} </>
     )
 }
+
 
 export default Home;
