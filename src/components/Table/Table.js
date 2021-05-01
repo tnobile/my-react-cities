@@ -7,18 +7,20 @@ function GlobalFilter({
     preGlobalFilteredRows,
     globalFilter,
     setGlobalFilter,
+    globalFilterInput,
+    setGlobalFilterInput,
 }) {
     const count = preGlobalFilteredRows.length
-    const [value, setValue] = useState(globalFilter)
+    //const [value, setValue] = useState(globalFilter)
     const onChange = useAsyncDebounce(value => {
         setGlobalFilter(value || undefined)
     }, 200)
 
     return (
         <input
-            value={value || ""}
+            value={globalFilterInput || ""}
             onChange={e => {
-                setValue(e.target.value);
+                setGlobalFilterInput(e.target.value);
                 onChange(e.target.value);
             }}
             placeholder={`Global search with ${count} records...`}
@@ -48,6 +50,7 @@ const Table = ({ columns, data }) => {
     );
 
     const [filterInput, setFilterInput] = useState('');
+    const [globalFilterInput, setGlobalFilterInput] = useState('');
     const handleFilterChange = (e) => {
         const value = e.target.value || undefined;
         setFilter("city", value);
@@ -56,7 +59,15 @@ const Table = ({ columns, data }) => {
 
     useEffect(() => {
         console.log("data changed");
+        setFilterInput('');
+        setGlobalFilterInput('');
     }, [data]);
+    const onReset = () => {
+        setFilterInput('');
+        setGlobalFilterInput('');
+        setFilter("city", undefined);
+        setGlobalFilter(undefined);
+    }
 
     return (
         <>
@@ -73,8 +84,11 @@ const Table = ({ columns, data }) => {
                         preGlobalFilteredRows={preGlobalFilteredRows}
                         globalFilter={state.globalFilter}
                         setGlobalFilter={setGlobalFilter}
+                        setGlobalFilterInput={setGlobalFilterInput}
+                        globalFilterInput={globalFilterInput}
                     />
                 </div>
+                <button className={styles.btnReset} onClick={onReset}>reset</button>
             </div>
             <table {...getTableProps()}>
                 <thead>

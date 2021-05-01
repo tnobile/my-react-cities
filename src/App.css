@@ -60,3 +60,9 @@ table th.sort-asc::before {
 table th.sort-desc::before {
   border-top: 5px solid #22543d;
 }
+
+
+
+a:visited, a:link{
+  color: purple;
+}
