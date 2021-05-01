@@ -1,3 +1,33 @@
-table{
+table {
     width: 100%;
+}
+
+.selector {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+}
+
+.source {
+    text-align: right;
+}
+
+/* Create three equal columns that floats next to each other */
+
+.topColumn {
+    color: purple;
+    font-size: 24px;
+    text-align: center;
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    background: pink;
+}
+
+/* Clear floats after the columns */
+
+.topRow:after {
+    content: "";
+    display: table;
+    clear: both;
 }

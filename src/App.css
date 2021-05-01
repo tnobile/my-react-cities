@@ -25,7 +25,7 @@ input {
   outline-color: #719ECE;
 }
 
-input:focus{
+input:focus {
   outline: none;
   border: 5px solid #719ECE
 }
@@ -46,6 +46,7 @@ table th, table td {
   border-bottom: 1px solid #ededed;
   border-right: 1px solid #ededed;
   position: relative;
+  text-align: center;
 }
 
 table th:last-child, table td:last-child {

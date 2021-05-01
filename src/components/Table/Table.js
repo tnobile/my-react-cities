@@ -28,7 +28,7 @@ const Table = ({ columns, data }) => {
             <input
                 value={filterInput}
                 onChange={handleFilterChange}
-                placeholder={"Search name"}
+                placeholder={"Search city name"}
             />
             <table {...getTableProps()}>
                 <thead>
@@ -55,7 +55,7 @@ const Table = ({ columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map(cell => {
-                                    return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
                                 })}
                             </tr>
                         );
