@@ -14,14 +14,16 @@ const Home = () => {
             const result = await getData();
             setData(result);
         }
-        fetchData();
+        try {
+            fetchData();
+        } catch (err) { console.log(err); }
     }, [])
 
     return (
         <>
             <h1>Country/City Data</h1>
             <table>
-                {data && data.map((d,i) => <City key={i} city={d}></City>)}
+                {data && data.map((d, i) => <City key={i} city={d}></City>)}
             </table>
         </>
     )

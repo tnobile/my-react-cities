@@ -7,5 +7,5 @@ export const getData = async () => {
         throw new Error(message);
     }
     var content = await response.json();
-    return content.filter((f, i) => i < 50);
+    return content.filter((f, i) => i < 100);
 }
