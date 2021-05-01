@@ -46,7 +46,7 @@ const Home = () => {
         // 3. immediately executed function for async purpose
         (async () => {
             //try {
-            const result = await getData(country, 100);
+            const result = await getData(country, 1000);
             console.log(`got ${result.length}  for ${country}`)
             setData(result);
             //} catch (e) {
