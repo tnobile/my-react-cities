@@ -1,7 +1,6 @@
 import { getData } from '../../services/CityService'
 import React, { useState, useEffect, useMemo } from 'react'
 import Table from '../Table/Table'
-import { useTable } from 'react-table';
 //import styles from './Home.module.css'
 
 const toFlag = (code) => {
@@ -114,7 +113,7 @@ const Home = () => {
                 accessor: "lng"
             }]
         }
-    ])
+    ], [])
     return (
         <>
             <div>
