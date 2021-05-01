@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFilters, useGlobalFilter, useSortBy, useTable, useAsyncDebounce, usePagination } from 'react-table'
-import styles from './Table.module.css'
+import styles from './Table.module.scss'
 //import "react-table/react-table.css"
 
 
