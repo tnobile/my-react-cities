@@ -106,7 +106,7 @@ const Home = () => {
                 Header: "Population(Proper)",
                 accessor: "population_proper",
                 Cell: props => {
-                    console.log(props.cell);
+                    //console.log(props.cell);
                     return <div style={{ "textAlign": 'right', "color": "purple", "background": "lightblue" }}>
                         {nf.format(props.cell.value)}</div>
                 }
