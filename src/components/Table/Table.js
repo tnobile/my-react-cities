@@ -57,7 +57,7 @@ const Table = ({ columns, data }) => {
     } = useTable({
         columns,
         data,
-        initialState: { pageIndex: 0 }
+        initialState: { pageIndex: 0, pageSize: 20 }
     },
         useFilters,
         useGlobalFilter,
@@ -78,8 +78,6 @@ const Table = ({ columns, data }) => {
         setFilterInput('');
         setGlobalFilterInput('');
         setTotalCout(data.length);
-        setPageSize(10);
-        gotoPage(0);
         gotoPage(0);
         console.log(`data changed with ${data.length} rows`);
     }, [data, gotoPage, setPageSize]);

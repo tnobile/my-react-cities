@@ -15,6 +15,12 @@ const toFlag = (code) => {
         case "FR": return "🇫🇷";
         case "US": return "🇺🇸";
         case "DE": return "🇩🇪";
+        case "BR": return "🇧🇷";
+        case "KP": return "🇰🇵";
+        case "KR": return "🇰🇷";
+        case "SG": return "🇸🇬";
+        case "HN": return "🇭🇳";
+        case "CL": return "🇨🇱";
         default: return code;
     }
 }
@@ -128,14 +134,21 @@ const Home = () => {
                 <div className={styles.topColumn}>
                     <select className={styles.selector}
                         name='country' defaultValue={country} onChange={handleCountryChange}>
-                        <option value="jp" name="jp">Japan</option>
-                        <option value="gb" name="gb">UK</option>
-                        <option value="ch" name="ch">Switzerland</option>
                         <option value="ar" name="ar">Argentina</option>
+                        <option value="br" name="br">Brazil</option>
+                        <option value="ch" name="ch">Switzerland</option>
+                        <option value="cl" name="cl">Chile</option>
                         <option value="cn" name="cn">China</option>
                         <option value="de" name="de">Germany</option>
                         <option value="es" name="es">Spain</option>
                         <option value="fr" name="fr">France</option>
+                        <option value="gb" name="gb">UK</option>
+                        <option value="hk" name="hk">Hong Kong</option>
+                        <option value="hn" name="hn">Honduras</option>
+                        <option value="jp" name="jp">Japan</option>
+                        <option value="kp" name="kp">North Korea</option>
+                        <option value="kr" name="kr">South Korea</option>
+                        <option value="sg" name="sg">Singapore</option>
                     </select>
                 </div>
                 <div className={styles.topColumn}>
