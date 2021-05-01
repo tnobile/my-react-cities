@@ -1,7 +1,7 @@
-const url = "https://tnobile.github.io/data-world-cities/jp/";
+const url = "https://tnobile.github.io/data-world-cities/";
 
-export const getData = async () => {
-    var response = await fetch(url);
+export const getData = async (country) => {
+    var response = await fetch(url+country);
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);

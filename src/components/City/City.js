@@ -1,9 +1,10 @@
 //import styles from './City.module.css'
 
-const City = ({ city }) => {
+const City = ({ city, row }) => {
     return (
         <>
             <tr>
+                <td>{row + 1}</td>
                 <td>{city.city}</td>
                 <td>{city.admin_name}</td>
                 <td>{city.lng}</td>
