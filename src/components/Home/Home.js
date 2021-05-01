@@ -12,12 +12,17 @@ const Home = () => {
         //     setData(d);
         // }).catch(e => { console.log("failed in fetch", e.message) });
         const fetchData = async () => {
-            const result = await getData(country);
-            setData(result);
+            try {
+                const result = await getData(country);
+                console.log(`got ${result.length}`)
+                setData(result);
+            } catch (e) {
+                setData([]);
+                console.log(`${e.name}:${e.message}`);
+            }
         }
-        try {
-            fetchData();
-        } catch (e) { console.log(`${e.name}:${e.message}`); }
+
+        fetchData();
     }, [country])
     const handleCountryChange = (evt) => {
         setCountry(evt.target.value);
@@ -31,14 +36,18 @@ const Home = () => {
                     <option value="jp" name="jp">Japan</option>
                     <option value="gb" name="gb">UK</option>
                     <option value="ch" name="ch">Switzerland</option>
-                    <option value="ar" name="ar">Argentinaj</option>
+                    <option value="ar" name="ar">Argentina</option>
                     <option value="cn" name="cn">China</option>
                     <option value="de" name="de">Germany</option>
                     <option value="es" name="es">Spain</option>
+                    <option value="fr" name="fr">France</option>
                 </select>
             </div>
             <table>
-                {data && data.map((d, i) => <City key={i} row={i} city={d}></City>)}
+                <tbody>
+                    {data && data.map((d, i) => <City key={i} row={i} city={d}></City>)}
+                    {data && data.length === 0 && <h2>No data for {country}</h2>}
+                </tbody>
             </table>
         </>
     )
