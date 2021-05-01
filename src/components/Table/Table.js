@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useFilters, useGlobalFilter, useSortBy, useTable, useAsyncDebounce } from 'react-table'
+import { useFilters, useGlobalFilter, useSortBy, useTable, useAsyncDebounce, usePagination } from 'react-table'
 import styles from './Table.module.css'
 
 
@@ -35,22 +35,39 @@ const Table = ({ columns, data }) => {
         headerGroups, // headerGroups, if your table has groupings
         rows, // rows for the table based on the data passed
         prepareRow, // Prepare the row (this function needs to be called for each row before getting the row props)
+
+        page, // Instead of using 'rows', we'll use page,
+        // which has only the rows for the active page
+
+        // The rest of these things are super handy, too ;)
+        canPreviousPage,
+        canNextPage,
+        pageOptions,
+        pageCount,
+        gotoPage,
+        nextPage,
+        previousPage,
+        setPageSize,
+        state: { pageIndex, pageSize },
+
         setFilter, // useFilter Hook 
         state,
         preGlobalFilteredRows,
         setGlobalFilter
-
     } = useTable({
         columns,
-        data
+        data,
+        initialState: { pageIndex: 2 }
     },
         useFilters,
         useGlobalFilter,
-        useSortBy
+        useSortBy,
+        usePagination
     );
 
     const [filterInput, setFilterInput] = useState('');
     const [globalFilterInput, setGlobalFilterInput] = useState('');
+    const [totalCount, setTotalCout] = useState(0);
     const handleFilterChange = (e) => {
         const value = e.target.value || undefined;
         setFilter("city", value);
@@ -58,9 +75,10 @@ const Table = ({ columns, data }) => {
     }
 
     useEffect(() => {
-        console.log("data changed");
         setFilterInput('');
         setGlobalFilterInput('');
+        setTotalCout(data.length);
+        console.log(`data changed with ${data.length} rows`);
     }, [data]);
     const onReset = () => {
         setFilterInput('');
@@ -110,7 +128,7 @@ const Table = ({ columns, data }) => {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {rows.map((row, i) => {
+                    {page.map((row, i) => {
                         prepareRow(row);
                         return (
                             <tr {...row.getRowProps()}>
@@ -122,6 +140,53 @@ const Table = ({ columns, data }) => {
                     })}
                 </tbody>
             </table>
+            <div className={styles.pagination}>
+                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                    {'<<'}
+                </button>{' '}
+                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                    {'<'}
+                </button>{' '}
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                    {'>'}
+                </button>{' '}
+                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                    {'>>'}
+                </button>{' '}
+                <span>
+                    Page{' '}
+                    <strong>
+                        {pageIndex + 1} of {pageOptions.length}
+                    </strong>{' '}
+                </span>
+                <span>
+                    | Go to page:{' '}
+                    <input
+                        type="number"
+                        value={pageIndex + 1}
+                        defaultValue={pageIndex + 1}
+                        onChange={e => {
+                            const page = e.target.value ? Number(e.target.value) - 1 : 0
+                            gotoPage(page)
+                        }}
+                        style={{ width: '100px' }}
+                    />
+                </span>{' '}
+                <select
+                    value={pageSize}
+                    onChange={e => {
+                        setPageSize(Number(e.target.value))
+                    }}
+                >
+                    {[10, 20, 30, 40, 50, totalCount].map(pageSize => (
+                        <option key={pageSize} value={pageSize}>
+                            Show {pageSize}
+                        </option>
+                    ))}
+                </select>
+                <button onClick={e => { totalCount === pageSize ? setPageSize(10) : setPageSize(totalCount) }}>
+                    {totalCount === pageSize ? 'Paginate' : 'Show All'}</button>
+            </div>
         </>
     );
     // return (
